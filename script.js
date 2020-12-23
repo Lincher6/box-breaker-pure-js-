@@ -181,24 +181,28 @@ window.onresize = function() {
     rect = $field.getBoundingClientRect()
     fieldHeight = rect.bottom - rect.top
     fieldWidth = rect.right - rect.left
+    updateSidebar()
 }
+updateSidebar()
 
-if (window.innerWidth < 1000) {
-    let showSidebar = false
-    const $toggle = document.getElementById("toggle")
-    const $sidebar = document.getElementById("sidebar")
-    $toggle.addEventListener("click", toggle)
+function updateSidebar() {
+    if (window.innerWidth < 1000) {
+        let showSidebar = false
+        const $toggle = document.getElementById("toggle")
+        const $sidebar = document.getElementById("sidebar")
+        $toggle.addEventListener("click", toggle)
 
-    function toggle() {
-        if (showSidebar) {
-            $sidebar.classList.remove("show")
-            showSidebar = false
-            $toggle.innerHTML= '&#x2B31;'
-        } else {
-            $sidebar.classList.add("show")
-            showSidebar = true
-            $toggle.innerHTML= '&#x2715'
+        function toggle() {
+            if (showSidebar) {
+                $sidebar.classList.remove("show")
+                showSidebar = false
+                $toggle.innerHTML= '&#x2B31;'
+            } else {
+                $sidebar.classList.add("show")
+                showSidebar = true
+                $toggle.innerHTML= '&#x2715'
+            }
+            pauseGame()
         }
-        pauseGame()
     }
 }
