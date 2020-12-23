@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Box Breaker</title>
+    <link rel="icon" href="assets/box.png" />
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <div id="toggle"> &#x2B31; </div>
+        <div id="game-window">
+            <div id="header">
+                <div class="controls">
+                    <button id="pause" class="button disabled">
+                        PAUSE
+                    </button>
+                    <button id="start" class="button">
+                        NEW GAME
+                    </button>
+                </div>
+                <div id="info">
+                    <div id="timer" class="display"></div>
+                    <div id="score" class="display"></div>
+                </div>
+            </div>
+            <div id="field" class="paused"></div>
+        </div>
+        <div id="sidebar">
+            <div id="title">
+                <a href="https://github.com/Lincher6/box-breaker-pure-js-" target="_blank" rel="noreferrer">
+                    <img src="assets/logo.png" alt=""/>
+                </a>
+            </div>
+            <div id="results"></div>
+        </div>
+    </div>
+
+    <div id="dialog">
+        <div id="card">
+            <h2>GAME OVER</h2>
+            <p id="total">Your score: </p>
+            <p>Now type your name and earn your place in leaderboards</p>
+            <form name="results">
+                <input type="text" name="user-name" placeholder="Your name"/>
+                <div class="error-text">required</div>
+                <div class="controls">
+                    <button id="submit" type="submit" class="button">SUBMIT</button>
+                    <button id="cancel" type="button" class="button">CANCEL</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
