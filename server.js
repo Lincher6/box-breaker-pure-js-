@@ -6,7 +6,7 @@ const fs = require('fs');
 const { results } = require('./results.json')
 
 const app = express()
-const port = 3000
+const port = 5000
 app.use(serveStatic('static'))
 app.use(bodyParser.json())
 
