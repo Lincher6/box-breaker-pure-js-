@@ -9,7 +9,7 @@ const colors = ["red", "blue", "green"]
 let rect = $field.getBoundingClientRect()
 let fieldHeight = rect.bottom - rect.top
 let fieldWidth = rect.right - rect.left
-let scoreTable = JSON.parse(localStorage.getItem("score")) || []
+let scoreTable = []
 let time
 let coords
 let gameStatus
@@ -21,7 +21,9 @@ $field.addEventListener("click", hit)
 $pause.addEventListener("click", pauseGame)
 $form.addEventListener("submit", saveResults)
 $start.addEventListener("click", newGame)
+$timer.addEventListener("blur", editTime)
 
+loadResults()
 init()
 
 function newGame() {
@@ -48,6 +50,17 @@ function setTime(time) {
     if (time < 1000) {
         gameOver()
     }
+}
+
+function editTime(event) {
+    const input = event.target.textContent
+    if (input.match(/^[0-6][0-9]:[0-6][0-9]$/)) {
+        const [ minutes, seconds ] = input.split(':')
+        time = (minutes * 60 * 1000) + (seconds * 1000)
+    } else {
+        time = 60 * 1000
+    }
+    setTime(new Date(time))
 }
 
 function hit(event) {
@@ -84,14 +97,35 @@ function saveResults(event) {
         return
     }
     scoreTable.push({name, score})
-    localStorage.setItem("score", JSON.stringify(scoreTable))
+    scoreTable = sortResults(scoreTable)
+
+    uploadResults(scoreTable)
+
     $dialog.style.display = "none"
     init()
 }
 
+async function loadResults() {
+    const response = await fetch('/results', {
+        method: 'GET'
+    })
+    const { results } = await response.json()
+    scoreTable = results
+    drawTable()
+}
+
+async function uploadResults(results) {
+    await fetch('/results', {
+        method: 'POST',
+        body: JSON.stringify({ results }),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+}
+
 function drawTable() {
     $results.innerHTML = `<h2>HI-SCORE</h2>`
-    scoreTable = sortResults(scoreTable)
     scoreTable.forEach(({ name, score }) => {
         const $record = document.createElement('div')
         $record.innerHTML = `<span>${name}</span><span class="score">${score}</span>`
@@ -122,11 +156,13 @@ function pauseGame() {
         $pause.innerText = 'PAUSE'
         timer = gameFlow()
         $field.classList.remove("paused")
+        $timer.contentEditable = false
     } else {
         gameStatus.paused = true
         $pause.innerText = 'RESUME'
         clearInterval(timer)
         $field.classList.add("paused")
+        $timer.contentEditable = true
     }
 }
 
