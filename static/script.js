@@ -6,9 +6,8 @@ const $input = $form.elements["user-name"];
 const BOX_SIZE = 35;
 const shotSound = new Audio("assets/shot.wav"); shotSound.volume = .2;
 const colors = ["red", "blue", "green"];
-let rect = $field.getBoundingClientRect();
-let fieldHeight = rect.bottom - rect.top;
-let fieldWidth = rect.right - rect.left;
+let fieldHeight = $field.offsetHeight;
+let fieldWidth = $field.offsetWidth;
 let scoreTable = [];
 let time, coords, gameStatus, timer, score;
 
@@ -210,9 +209,8 @@ function flash(event) {
 //adaptive
 
 window.onresize = function() {
-    rect = $field.getBoundingClientRect();
-    fieldHeight = rect.bottom - rect.top;
-    fieldWidth = rect.right - rect.left;
+    fieldHeight = $field.offsetHeight;
+    fieldWidth = $field.offsetWidth;
     updateSidebar();
 }
 updateSidebar();
