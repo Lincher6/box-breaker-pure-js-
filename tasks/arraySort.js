@@ -1,4 +1,4 @@
-const {RequiredError, ArrayDataError} = require("../lib/errors");
+const {ValidationError} = require("../lib/errors");
 
 module.exports = (arr1, arr2) => {
     validate(arr1, arr2);
@@ -39,20 +39,20 @@ function validate(arr1, arr2) {
     }
 
     if (!Array.isArray(arr1)) {
-        throw new TypeError("First argument is not an array");
+        throw new ValidationError("first argument is not an array");
     } else if (!Array.isArray(arr2)) {
-        throw new TypeError("Second argument is not an array");
+        throw new ValidationError("second argument is not an array");
     } else if (arr1.length === 0) {
-        throw new RequiredError("First array must not be empty");
+        throw new ValidationError("first array must not be empty");
     } else if (arr2.length >= 1000) {
-        throw new RangeError("Second array is too big. max=1000");
+        throw new ValidationError("second array is too big. max=1000");
     } else if (arr1.some(el => el < 1 || typeof el !== 'number')) {
-        throw new ArrayDataError("First array elements must be positive numbers");
-    } else if (arr1.some(el => el > 1000 || typeof el !== 'number')) {
-        throw new ArrayDataError("Second array elements must be numbers less than 1000");
+        throw new ValidationError("first array elements must be positive numbers");
+    } else if (arr2.some(el => el > 1000 || typeof el !== 'number')) {
+        throw new ValidationError("second array elements must be numbers less than 1000");
     } else if (!isDistinct(arr2)) {
-        throw new ArrayDataError("Second array elements must be distinct");
+        throw new ValidationError("second array elements must be distinct");
     } else if (arr2.some(el => !arr1.includes(el))) {
-        throw new ArrayDataError("All second array elements must be in first array");
+        throw new ValidationError("all second array elements must be in first array");
     }
 }

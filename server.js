@@ -1,6 +1,5 @@
 const express = require('express');
 const serveStatic = require('serve-static');
-const bodyParser = require('body-parser');
 const path = require('path');
 
 const app = express();

@@ -1,20 +1,28 @@
 const { assert } = require('chai');
-const { gotCall } = require('../../lib/utils');
-const fixtures = require('./fixtures');
-const fixturesCommon = require('../fixturesCommon')
+const { getGot } = require('../../lib/utils');
+const { positive, negative } = require('./fixtures');
+const { positiveCommon, negativeCommon } = require('../fixturesCommon')
 
-describe('Testing task 1 - roman', () => {
-    const cases = [...fixtures, ...fixturesCommon];
+const got = getGot();
+
+describe('Testing task 1 - roman. (Positive)', () => {
+    const cases = [...positive, ...positiveCommon];
 
     cases.forEach(({ name, body, method, expected }) => {
         it(name, async () => {
-            try {
-                const { body: { result } } = await gotCall({ url: '/roman', method: 'post', body });
-                assert[method](result, expected);
-            } catch (e) {
-                const { message } = e.response.body;
-                assert[method](message, expected);
-            }
+            const { body: { result } } = await got({ url: '/roman', method: 'post', body });
+            assert[method](result, expected);
+        })
+    })
+})
+
+describe('Testing task 1 - roman. (Negative)', () => {
+    const cases = [...negative, ...negativeCommon];
+
+    cases.forEach(({ name, body, method, expected }) => {
+        it(name, async () => {
+            const { body: { message } } = await got({ url: '/roman', method: 'post', body, throwError: false });
+            assert[method](message, expected);
         })
     })
 })

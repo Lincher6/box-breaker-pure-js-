@@ -1,4 +1,4 @@
-const {ArrayDataError} = require("../lib/errors");
+const {ValidationError} = require("../lib/errors");
 
 module.exports = (value, target) => {
     validate(value, target);
@@ -15,12 +15,12 @@ module.exports = (value, target) => {
 
 function validate(value, target) {
     if (!Array.isArray(value)) {
-        throw new TypeError("value is not an Array");
+        throw new ValidationError("nums is not an Array");
     } else if (value.some(el => typeof el !== 'number')) {
-        throw new ArrayDataError("Array elements must be numbers");
+        throw new ValidationError("nums elements must be numbers");
     } else if (JSON.stringify([...value].sort()) !== JSON.stringify(value)) {
-        throw new ArrayDataError("Array must be sorted");
+        throw new ValidationError("nums must be sorted");
     } else if (typeof target !== 'number') {
-        throw new TypeError("target must be a number");
+        throw new ValidationError("target must be a number");
     }
 }

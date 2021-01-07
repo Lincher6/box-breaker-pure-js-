@@ -1,4 +1,4 @@
-const {RequiredError, ArrayDataError} = require("../lib/errors");
+const {ValidationError} = require("../lib/errors");
 
 module.exports = (value) => {
     validate(value);
@@ -23,15 +23,15 @@ function validate(value) {
     const chars = ['(', '{', '[', ']', '}', ')'];
 
     if (typeof value !== 'string') {
-        throw new TypeError('Value is not a string');
+        throw new ValidationError('value is not a string');
     } else if (value.length > 104) {
-        throw new RangeError('String is too long');
+        throw new ValidationError('string is too long');
     } else if (value.length === 0) {
-        throw new RequiredError('Value is empty');
+        throw new ValidationError('value is empty');
     }
 
     const brackets = value.split('');
     if (brackets.some(bracket => !chars.includes(bracket))) {
-        throw new ArrayDataError('Invalid characters');
+        throw new ValidationError('invalid characters');
     }
 }
