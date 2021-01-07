@@ -1,7 +1,7 @@
 const { assert } = require('chai');
 const { getGot } = require('../../lib/utils');
 const { positive, negative } = require('./fixtures');
-const { positiveCommon, negativeCommon } = require('../fixturesCommon')
+const { positiveCommon, negativeCommon } = require('../fixturesCommon');
 
 const got = getGot();
 
