@@ -29,14 +29,15 @@ module.exports = (value) => {
 }
 
 function validate(value) {
-    const letters = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
+    const LETTERS = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
+    const MAX_LENGTH = 15;
     if (typeof value !== 'string') {
         throw new ValidationError('input is not a string');
-    } else if (value.length > 15) {
+    } else if (value.length > MAX_LENGTH) {
         throw new ValidationError('roman number is too big');
     } else if (value.length === 0) {
         throw new ValidationError('input is empty');
-    } else if (value.split('').some(letter => !letters.includes(letter))) {
+    } else if (value.split('').some(letter => !LETTERS.includes(letter))) {
         throw new ValidationError('not a roman number');
     }
 }

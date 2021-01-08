@@ -20,18 +20,19 @@ module.exports = (value) => {
 }
 
 function validate(value) {
-    const chars = ['(', '{', '[', ']', '}', ')'];
+    const CHARS = ['(', '{', '[', ']', '}', ')'];
+    const MAX_LENGTH = 104;
 
     if (typeof value !== 'string') {
         throw new ValidationError('value is not a string');
-    } else if (value.length > 104) {
+    } else if (value.length > MAX_LENGTH) {
         throw new ValidationError('string is too long');
     } else if (value.length === 0) {
         throw new ValidationError('value is empty');
     }
 
     const brackets = value.split('');
-    if (brackets.some(bracket => !chars.includes(bracket))) {
+    if (brackets.some(bracket => !CHARS.includes(bracket))) {
         throw new ValidationError('invalid characters');
     }
 }

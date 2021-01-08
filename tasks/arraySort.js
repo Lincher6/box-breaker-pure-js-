@@ -28,6 +28,9 @@ module.exports = (arr1, arr2) => {
 }
 
 function validate(arr1, arr2) {
+    const MAX_LENGTH = 1000;
+    const MAX_VALUE = 1000;
+
     const isDistinct = (arr) => {
         const distinct = {};
         return !arr.some(el => {
@@ -44,11 +47,11 @@ function validate(arr1, arr2) {
         throw new ValidationError("second argument is not an array");
     } else if (arr1.length === 0) {
         throw new ValidationError("first array must not be empty");
-    } else if (arr2.length >= 1000) {
+    } else if (arr2.length >= MAX_LENGTH) {
         throw new ValidationError("second array is too big. max=1000");
     } else if (arr1.some(el => el < 1 || typeof el !== 'number')) {
         throw new ValidationError("first array elements must be positive numbers");
-    } else if (arr2.some(el => el > 1000 || typeof el !== 'number')) {
+    } else if (arr2.some(el => el > MAX_VALUE || typeof el !== 'number')) {
         throw new ValidationError("second array elements must be numbers less than 1000");
     } else if (!isDistinct(arr2)) {
         throw new ValidationError("second array elements must be distinct");
