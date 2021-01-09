@@ -39,7 +39,7 @@ module.exports = {
             },
             method: 'equal',
             expected: 1994
-        }
+        },
     ],
 
     negative: [
