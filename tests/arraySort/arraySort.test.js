@@ -10,7 +10,7 @@ describe('Testing task 4 - arraySort. (Positive)', () => {
 
     cases.forEach(({ name, body, method, expected }) => {
         it(name, async () => {
-            const { body: { result } } = await got({ url: '/arraySort', method: 'post', body });
+            const { body: { result } } = await got({ url: 'arraySort', method: 'post', body });
             assert[method](result, expected);
         })
     })
@@ -21,7 +21,7 @@ describe('Testing task 4 - arraySort. (Negative)', () => {
 
     cases.forEach(({ name, body, method, expected }) => {
         it(name, async () => {
-            const { body: { message } } = await got({ url: '/arraySort', method: 'post', body, throwError: false });
+            const { body: { message } } = await got({ url: 'arraySort', method: 'post', body, throwError: false });
             assert[method](message, expected);
         })
     })

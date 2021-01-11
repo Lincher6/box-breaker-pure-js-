@@ -10,7 +10,7 @@ describe('Testing task 5 - nextIndex. (Positive)', () => {
 
     cases.forEach(({ name, body, method, expected }) => {
         it(name, async () => {
-            const { body: { result } } = await got({ url: '/nextIndex', method: 'post', body });
+            const { body: { result } } = await got({ url: 'nextIndex', method: 'post', body });
             assert[method](result, expected);
         })
     })
@@ -21,7 +21,7 @@ describe('Testing task 5 - nextIndex. (Negative)', () => {
 
     cases.forEach(({ name, body, method, expected }) => {
         it(name, async () => {
-            const { body: { message } } = await got({ url: '/nextIndex', method: 'post', body, throwError: false });
+            const { body: { message } } = await got({ url: 'nextIndex', method: 'post', body, throwError: false });
             assert[method](message, expected);
         })
     })

@@ -10,7 +10,7 @@ describe('Testing task 2 - palindrome. (Positive)', () => {
 
     cases.forEach(({ name, body, method }) => {
         it(name, async () => {
-            const { body: { result } } = await got({ url: '/palindrome', method: 'post', body });
+            const { body: { result } } = await got({ url: 'palindrome', method: 'post', body });
             assert[method](result);
         })
     })
@@ -21,7 +21,7 @@ describe('Testing task 2 - palindrome. (Negative)', () => {
 
     cases.forEach(({ name, body, method, expected }) => {
         it(name, async () => {
-            const { body: { message } } = await got({ url: '/palindrome', method: 'post', body, throwError: false });
+            const { body: { message } } = await got({ url: 'palindrome', method: 'post', body, throwError: false });
             assert[method](message, expected);
         })
     })

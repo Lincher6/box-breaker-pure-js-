@@ -10,7 +10,7 @@ describe('Testing task 1 - roman. (Positive)', () => {
 
     cases.forEach(({ name, body, method, expected }) => {
         it(name, async () => {
-            const { body: { result } } = await got({ url: '/roman', method: 'post', body });
+            const { body: { result } } = await got({ url: 'roman', method: 'post', body });
             assert[method](result, expected);
         })
     })
@@ -21,7 +21,7 @@ describe('Testing task 1 - roman. (Negative)', () => {
 
     cases.forEach(({ name, body, method, expected }) => {
         it(name, async () => {
-            const { body: { message } } = await got({ url: '/roman', method: 'post', body, throwError: false });
+            const { body: { message } } = await got({ url: 'roman', method: 'post', body, throwError: false });
             assert[method](message, expected);
         })
     })
