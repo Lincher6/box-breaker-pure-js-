@@ -86,12 +86,12 @@ module.exports = {
             expected: 'value is not a number'
         },
         {
-            name: '400 - value must be an integer, got float',
+            name: '400 - value must be an integer',
             body: {
                 input: 1.5
             },
             method: 'equal',
-            expected: 'value must be an integer, got float'
+            expected: 'value must be an integer'
         },
         {
             name: '400 - value is out of range',

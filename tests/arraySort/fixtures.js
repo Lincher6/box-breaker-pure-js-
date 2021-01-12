@@ -132,22 +132,22 @@ module.exports = {
             expected: 'second array elements must be greater than 1'
         },
         {
-            name: '400 - first array elements must be integers, got float',
+            name: '400 - first array elements must be integers',
             body: {
                 arr1: [1, 1.5, 3.2],
                 arr2: [1, 2, 3]
             },
             method: 'equal',
-            expected: 'first array elements must be integers, got float'
+            expected: 'first array elements must be integers'
         },
         {
-            name: '400 - second array elements must be integers, got float',
+            name: '400 - second array elements must be integers',
             body: {
                 arr1: [1, 2, 3],
                 arr2: [1, 1.5, 3.2]
             },
             method: 'equal',
-            expected: 'second array elements must be integers, got float'
+            expected: 'second array elements must be integers'
         },
         {
             name: '400 - second array elements must be less than 1000',

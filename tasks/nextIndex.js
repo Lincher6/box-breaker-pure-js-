@@ -28,7 +28,7 @@ function validate(nums, target) {
         throw new ValidationError(`target must be less than ${MAX_INT}`);
     } else if (target < MIN_INT) {
         throw new ValidationError(`target must be more than ${MIN_INT}`);
-    } else if (target % 1 !== 0) {
-        throw new ValidationError("target must be an integer, got float");
+    } else if (!Number.isInteger(target)) {
+        throw new ValidationError("target must be an integer");
     }
 }

@@ -123,13 +123,13 @@ module.exports = {
             expected: 'nums array elements must be distinct'
         },
         {
-            name: '400 - nums array elements must be integers, got float',
+            name: '400 - nums array elements must be integers',
             body: {
                 nums: [1, 1.5, 2],
                 target: 0
             },
             method: 'equal',
-            expected: 'nums array elements must be integers, got float'
+            expected: 'nums array elements must be integers'
         },
         {
             name: '400 - nums must be sorted',
@@ -168,13 +168,13 @@ module.exports = {
             expected: `target must be more than ${MIN_INT}`
         },
         {
-            name: `400 - target must be an integer, got float`,
+            name: `400 - target must be an integer`,
             body: {
                 nums: [1, 2, 3],
                 target: 1.5
             },
             method: 'equal',
-            expected: `target must be an integer, got float`
+            expected: `target must be an integer`
         },
     ]
 }

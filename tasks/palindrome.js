@@ -21,7 +21,7 @@ function validate(value) {
     if (typeof value !== 'number') {
         throw new ValidationError('value is not a number');
     } else if (!Number.isInteger(value)) {
-        throw new ValidationError('value must be an integer, got float');
+        throw new ValidationError('value must be an integer');
     } else if (value > MAX_INT || value < MIN_INT) {
         throw new ValidationError('value is out of range');
     }
