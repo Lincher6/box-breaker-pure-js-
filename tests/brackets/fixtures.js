@@ -8,33 +8,40 @@ module.exports = {
             method: 'isTrue',
         },
         {
-            name: 'Test 1 (\'()[]{}\')',
+            name: 'Test 2 (\'()[]{}\')',
             body: {
                 input: '()[]{}'
             },
             method: 'isTrue',
         },
         {
-            name: 'Test 1 (\'(]\')',
+            name: 'Test 3 (\'(]\')',
             body: {
                 input: '(]'
             },
             method: 'isFalse',
         },
         {
-            name: 'Test 1 (\'([)]\')',
+            name: 'Test 4 (\'([)]\')',
             body: {
                 input: '([)]'
             },
             method: 'isFalse',
         },
         {
-            name: 'Test 1 (\'{[]}\')',
+            name: 'Test 5 (\'{[]}\')',
             body: {
                 input: '{[]}'
             },
             method: 'isTrue',
-        }
+        },
+        {
+            name: 'Test 5 (\'(\')',
+            body: {
+                input: '('
+            },
+            method: 'isFalse',
+        },
     ],
 
     negative: [
