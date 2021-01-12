@@ -40,9 +40,49 @@ module.exports = {
             method: 'equal',
             expected: 1994
         },
+        {
+            name: 'Test 6 (\'I\')',
+            body: {
+                input: 'I'
+            },
+            method: 'equal',
+            expected: 1
+        },
+        {
+            name: 'Test 7 (\'MMMCMXCIX\')',
+            body: {
+                input: 'MMMCMXCIX'
+            },
+            method: 'equal',
+            expected: 3999
+        },
+        {
+            name: 'Test 8 (\'MMXXI\')',
+            body: {
+                input: 'MMXXI'
+            },
+            method: 'equal',
+            expected: 2021
+        },
     ],
 
     negative: [
+        {
+            name: '400 - not a valid roman number',
+            body: {
+                input: 'VVX'
+            },
+            method: 'equal',
+            expected: 'not a valid roman number'
+        },
+        {
+            name: '400 - not a valid roman number',
+            body: {
+                input: 'XXXXXX'
+            },
+            method: 'equal',
+            expected: 'not a valid roman number'
+        },
         {
             name: '400 - input is not a string',
             body: {

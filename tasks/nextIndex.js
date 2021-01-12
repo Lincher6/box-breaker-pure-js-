@@ -1,4 +1,6 @@
 const {ValidationError} = require("../lib/errors");
+const {validateArray} = require("../lib/utils");
+const {MAX_INT, MIN_INT} = require("../lib/constants");
 
 module.exports = (value, target) => {
     validate(value, target);
@@ -13,14 +15,20 @@ module.exports = (value, target) => {
     return +value.length;
 }
 
-function validate(value, target) {
-    if (!Array.isArray(value)) {
-        throw new ValidationError("nums is not an Array");
-    } else if (value.some(el => typeof el !== 'number')) {
-        throw new ValidationError("nums elements must be numbers");
-    } else if (JSON.stringify([...value].sort()) !== JSON.stringify(value)) {
+function validate(nums, target) {
+    const sortNumbers = (arr) => [...arr].sort((a, b) => a - b);
+
+    validateArray(nums, 'nums', {checkIntegers: true, checkDistinct: true})
+
+    if (JSON.stringify(sortNumbers(nums)) !== JSON.stringify(nums)) {
         throw new ValidationError("nums must be sorted");
     } else if (typeof target !== 'number') {
         throw new ValidationError("target must be a number");
+    } else if (target > MAX_INT) {
+        throw new ValidationError(`target must be less than ${MAX_INT}`);
+    } else if (target < MIN_INT) {
+        throw new ValidationError(`target must be more than ${MIN_INT}`);
+    } else if (!Number.isInteger(target)) {
+        throw new ValidationError("target must be an integer");
     }
 }

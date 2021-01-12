@@ -31,6 +31,8 @@ module.exports = (value) => {
 function validate(value) {
     const LETTERS = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
     const MAX_LENGTH = 15;
+    const ROMAN_REGEX = /^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/;
+
     if (typeof value !== 'string') {
         throw new ValidationError('input is not a string');
     } else if (value.length > MAX_LENGTH) {
@@ -39,5 +41,7 @@ function validate(value) {
         throw new ValidationError('input is empty');
     } else if (value.split('').some(letter => !LETTERS.includes(letter))) {
         throw new ValidationError('not a roman number');
+    } else if (!value.match(ROMAN_REGEX)) {
+        throw new ValidationError('not a valid roman number');
     }
 }
