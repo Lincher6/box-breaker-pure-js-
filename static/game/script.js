@@ -1,11 +1,20 @@
-const selectors = ["field", "start", "timer", "score", "pause", "dialog", "cancel", "total", "results"];
-const [ $field, $start, $timer, $score, $pause, $dialog, $cancel, $total, $results ] = getElements(selectors);
-const $form = document.forms["results"];
-const $input = $form.elements["user-name"];
+import {parseCookies, checkPosition, getElements, getOffset, sortResults} from "../utils.js";
 
-const BOX_SIZE = 35;
-const shotSound = new Audio("assets/shot.wav"); shotSound.volume = .2;
+const selectors = [
+    "field", "start", "timer", "score", "pause", "dialog",
+    "cancel", "total", "results", "username", "hi-score"
+];
+
+const [
+    $field, $start, $timer, $score, $pause, $dialog,
+    $cancel, $total, $results, $username, $hiScore
+] = getElements(selectors);
+
+const $form = document.forms["results"];
+
+const shotSound = new Audio("../assets/shot.wav"); shotSound.volume = .2;
 const colors = ["red", "blue", "green"];
+const user = { name: parseCookies(document.cookie).user.username, hiScore: 0 };
 let fieldHeight = $field.offsetHeight;
 let fieldWidth = $field.offsetWidth;
 let scoreTable = [];
@@ -14,12 +23,13 @@ let time, coords, gameStatus, timer, score;
 $cancel.addEventListener("click", init);
 $field.addEventListener("click", hit);
 $pause.addEventListener("click", pauseGame);
-$form.addEventListener("submit", saveResults);
+$form.addEventListener("submit", saveResult);
 $start.addEventListener("click", newGame);
 $timer.addEventListener("blur", editTime);
 
 loadResults();
 init();
+
 
 function newGame() {
     init();
@@ -79,22 +89,21 @@ function addScore(amount) {
 function gameOver() {
     clearInterval(timer);
     $field.classList.add("paused");
-    $total.innerHTML = `Your score: <span class="score">${score}</span>`;
+    $total.innerHTML = `Congratulations <span class="primary">${user.name}</span><br/>
+                        Your score: <span class="secondary">${score}</span><br/>
+                        Your hi-score: <span class="secondary">${user.hiScore}</span><br/>`;
     $dialog.style.display = "flex";
     $form.elements["user-name"].focus();
 }
 
-function saveResults(event) {
+function saveResult(event) {
     event.preventDefault();
-    const name = $input.value;
-    if (name === '') {
-        $input.classList.add("error");
-        return;
-    }
+    const { name, hiScore } = user;
+    user.hiScore = hiScore > score ? hiScore : score;
     scoreTable.push({name, score});
     scoreTable = sortResults(scoreTable);
 
-    uploadResults(scoreTable);
+    uploadResult({name, score});
 
     $dialog.style.display = "none";
     init();
@@ -104,15 +113,16 @@ async function loadResults() {
     const response = await fetch('/results', {
         method: 'GET'
     })
-    const { results } = await response.json();
+    const { results, userResult } = await response.json();
     scoreTable = results;
+    user.hiScore = userResult;
     drawTable();
 }
 
-async function uploadResults(results) {
+async function uploadResult(result) {
     await fetch('/results', {
         method: 'POST',
-        body: JSON.stringify({ results }),
+        body: JSON.stringify(result),
         headers: {
             'Content-Type': 'application/json'
         },
@@ -120,11 +130,14 @@ async function uploadResults(results) {
 }
 
 function drawTable() {
-    $results.innerHTML = `<h2>HI-SCORE</h2>`;
+    $results.innerHTML = `<h2>LEADERBOARDS</h2>`;
     scoreTable.forEach(({ name, score }) => {
         const $record = document.createElement('div');
-        $record.innerHTML = `<span>${name}</span><span class="score">${score}</span>`;
+        $record.innerHTML = `<span class=${name === user.name ? 'primary': ''}>${name}</span>
+                             <span class="score">${score}</span>`;
         $results.appendChild($record);
+        $username.innerHTML = `Player: <h3 class="primary">${user.name}</h3>`;
+        $hiScore.innerHTML = `Hi-score: <h3 class="secondary">${user.hiScore}</h3>`
     })
 }
 
@@ -173,25 +186,6 @@ function init() {
     $field.innerHTML = '';
     $pause.classList.add("disabled");
     clearInterval(timer);
-    $input.value = '';
-    $input.classList.remove("error");
-}
-
-function sortResults(results) {
-    return results.sort((a, b) => b.score - a.score);
-}
-
-function getOffset(size) {
-    const rawOffset = Math.abs(Math.floor(Math.random() * size) - BOX_SIZE);
-    return rawOffset - (rawOffset % BOX_SIZE);
-}
-
-function checkPosition(positions, {top,left}) {
-    return !positions.some(position => position.top === top && position.left === left);
-}
-
-function getElements(selectors) {
-    return selectors.map(selector => document.getElementById(selector));
 }
 
 function flash(event) {

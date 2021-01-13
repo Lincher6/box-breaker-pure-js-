@@ -1,44 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    user-select: none;
-
-    --primary: #00e5ff;
-    --sub: #2b5278;
-    --secondary: #ff6000;
-    --bg: #182533;
-}
-
-a {
-    text-decoration: none;
-    color: initial;
-}
-
-body {
-    background-color: #182533;
-    color: white;
-    overflow: hidden;
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-h2 {
-    text-align: center;
-}
-
-#app {
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    padding: 0;
-    overflow: hidden;
-}
-
 #game-window {
     padding: 0 0 20px 20px;
     display: flex;
@@ -55,20 +14,6 @@ h2 {
 
 #toggle {
     display: none;
-}
-
-#title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-}
-
-#title img {
-    width: 160px;
-    height: 160px;
-    object-fit: contain;
-    cursor: pointer;
 }
 
 #results {
@@ -162,7 +107,7 @@ h2 {
     width: 35px;
     height: 35px;
     border-radius: 4px;
-    background: url(assets/box.png);
+    background: url(../assets/box.png);
     background-size: contain;
     animation: popUp .5s;
 }
@@ -209,24 +154,6 @@ h2 {
     padding: 5px 0;
 }
 
-#dialog input {
-    display: block;
-    width: 100%;
-    padding: 3px 7px;
-    font-size: 1.2rem;
-    margin-top: 10px;
-    background-color: transparent;
-    text-decoration: none;
-    outline: none;
-    color: white;
-    border: none;
-    border-bottom: 2px solid grey;
-}
-
-#dialog input.error {
-    border-bottom: 1px solid red;
-}
-
 #card {
     min-width: 300px;
     padding: 15px;
@@ -236,71 +163,27 @@ h2 {
     background-color: #182533;;
 }
 
-.error-text {
-    color: red;
-    display: none;
-}
-
 #dialog input.error ~ .error-text{
-    display: block;
-}
-
-/*buttons*/
-.button {
-    display: block;
-    color: white;
-    outline: none;
-    border: none;
-    background-color: transparent;
-    font-family: 'DigitalClock', sans-serif;
-    font-size: 1.7rem;
-    font-weight: 600;
-    min-width: 130px;
-    padding: 8px 12px;
-    margin: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    transition: opacity .2s, background-color .2s;
-}
-
-.button:hover {
-    opacity: .5;
-    transition: opacity .2s;
-}
-
-.button.disabled {
-    opacity: .5;
-    pointer-events: none;
-}
-
-#pause {
-    background-color: var(--primary);
-    color: black;
-}
-
-#start {
-    background-color: var(--secondary);
-}
-
-#submit {
-    color: var(--primary);
     opacity: 1;
 }
 
-#submit:hover {
-    background-color: rgba(0, 100, 100, .3);
-    transition: background-color .2s;
+#user-card {
+    width: 100%;
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px groove var(--primary);
 }
 
-#cancel {
-    color: var(--secondary);
-    opacity: 1;
+#username {
+    text-shadow: -2px 2px 1px black;
 }
 
-#cancel:hover {
-    background-color: rgba(200, 100, 0, .2);
-    transition: background-color .2s;
+#logout {
+    font-size: 1.2rem;
+    padding: 5px 10px;
+    margin-left: auto;
+    min-width: 0;
 }
 
 @media (max-width: 1000px) {
@@ -366,9 +249,4 @@ h2 {
 @keyframes sidebar {
     0% {right: -1000px}
     100% {right: 0}
-}
-
-@font-face {
-    font-family: 'DigitalClock';
-    src: local('DigitalClock'), url('assets/digital-7.ttf');
 }

@@ -4,7 +4,8 @@ const palindrome = require('../tasks/palindrome');
 const brackets = require('../tasks/brackets');
 const arraySort = require('../tasks/arraySort');
 const nextIndex = require('../tasks/nextIndex');
-const { callWithResponse, jsonParser } = require('../lib/utils');
+const { callWithResponse } = require('../lib/utils');
+const { jsonParser } = require('../lib/middlewares');
 const router = Router();
 
 router.post('/roman', jsonParser, (req, res) => {
