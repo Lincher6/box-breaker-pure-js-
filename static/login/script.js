@@ -1,9 +1,13 @@
-import {getElements, addError, clearErrors} from "../utils.js";
+import {getElements, addError, clearErrors, parseCookies} from "../utils.js";
 
 const selectors = ["username", "password", "login-form"];
 const [ $username, $password, $loginForm ] = getElements(selectors);
 
 $loginForm.addEventListener('submit', login);
+
+if (parseCookies(document.cookie).user.username) {
+    window.location.href = '/game'
+}
 
 async function login(event) {
     event.preventDefault();
