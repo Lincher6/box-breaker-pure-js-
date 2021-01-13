@@ -14,11 +14,17 @@ const $form = document.forms["results"];
 
 const shotSound = new Audio("../assets/shot.wav"); shotSound.volume = .2;
 const colors = ["red", "blue", "green"];
-const user = { name: parseCookies(document.cookie).user.username, hiScore: 0 };
 let fieldHeight = $field.offsetHeight;
 let fieldWidth = $field.offsetWidth;
 let scoreTable = [];
 let time, coords, gameStatus, timer, score;
+let user;
+
+try {
+    user = { name: parseCookies(document.cookie).user.username, hiScore: 0 };
+} catch (e) {
+    window.location.href= '/login';
+}
 
 $cancel.addEventListener("click", init);
 $field.addEventListener("click", hit);
