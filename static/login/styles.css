@@ -1,0 +1,22 @@
+#page-auth {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+#submit {
+    width: 180px;
+    margin: 10px auto;
+}
+
+p {
+    text-align: center;
+}
+
+.link {
+    color: var(--primary);
+    margin-left: 10px;
+}

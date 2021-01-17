@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="/globalStyles.css" rel="stylesheet">
+    <link href="/login/styles.css" rel="stylesheet">
+    <title>Registration</title>
+</head>
+<body>
+<div id="app">
+    <div id="page-auth">
+        <div id="title">
+            <a href="https://github.com/Lincher6/box-breaker-pure-js-" target="_blank" rel="noreferrer">
+                <img src="../assets/logo.png" alt=""/>
+            </a>
+        </div>
+        <form id="registration-form">
+            <div id="username">
+                <input type="text" placeholder="username" autofocus/>
+                <div class="error-text">required</div>
+            </div>
+
+            <div id="password">
+                <input type="password" placeholder="password"/>
+                <div class="error-text">passwords don`t match</div>
+            </div>
+
+            <div id="confirm-password">
+                <input type="password" placeholder="confirm password"/>
+                <div class="error-text">passwords don`t match</div>
+            </div>
+
+            <button id="submit" type="submit" class="button outlined-primary">REGISTER</button>
+
+            <p>Already have an account?<a href="/login" class="link">Login</a></p>
+        </form>
+    </div>
+    <script src="/registration/script.js" defer type="module"></script>
+</div>
+</body>
+</html>

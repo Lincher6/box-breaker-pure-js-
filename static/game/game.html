@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Box Breaker</title>
-    <link rel="icon" href="assets/favicon.ico">
+    <link rel="icon" href="../assets/favicon.ico">
     <link rel="icon" href="data:,">
-    <link href="style.css" rel="stylesheet">
+    <link href="/globalStyles.css" rel="stylesheet">
+    <link href="/game/styles.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -13,10 +14,10 @@
         <div id="game-window">
             <div id="header">
                 <div class="controls">
-                    <button id="pause" class="button disabled">
+                    <button id="pause" class="button disabled contained-primary">
                         PAUSE
                     </button>
-                    <button id="start" class="button">
+                    <button id="start" class="button contained-secondary">
                         NEW GAME
                     </button>
                 </div>
@@ -30,10 +31,18 @@
         <div id="sidebar">
             <div id="title">
                 <a href="https://github.com/Lincher6/box-breaker-pure-js-" target="_blank" rel="noreferrer">
-                    <img src="assets/logo.png" alt=""/>
+                    <img src="../assets/logo.png" alt=""/>
                 </a>
             </div>
             <div id="results"></div>
+            <div id="user-card">
+                <div id="username">Player: <h3 class="primary">-</h3></div>
+                <div id="hi-score">Hi-score: <h3 class="secondary">0</h3></div>
+            </div>
+            <form action="/logout" method="post">
+                <button id="logout" class="button contained-secondary">LOGOUT</button>
+            </form>
+
         </div>
     </div>
 
@@ -43,17 +52,16 @@
             <p id="total">Your score: </p>
             <p>Now type your name and earn your place in leaderboards</p>
             <form name="results">
-                <input type="text" name="user-name" placeholder="Your name"/>
-                <div class="error-text">required</div>
                 <div class="controls">
-                    <button id="submit" type="submit" class="button">SUBMIT</button>
-                    <button id="cancel" type="button" class="button">CANCEL</button>
+                    <button id="submit" type="submit" class="button outlined-primary">SAVE</button>
+                    <button id="cancel" type="button" class="button outlined-secondary">CANCEL</button>
                 </div>
 
             </form>
         </div>
     </div>
 
-    <script src="script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <script src="/game/script.js" defer type="module"></script>
 </body>
 </html>
