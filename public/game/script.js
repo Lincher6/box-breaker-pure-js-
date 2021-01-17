@@ -1,4 +1,5 @@
-import {parseCookies, checkPosition, getElements, getOffset, sortResults} from "../utils.js";
+import { checkPosition, getElements, getOffset } from "../utils.js";
+if (document.cookie.split('=')[0] !== 'user') window.location.href = '/login';
 
 const selectors = [
     "field", "start", "timer", "score", "pause", "dialog",
@@ -18,13 +19,7 @@ let fieldHeight = $field.offsetHeight;
 let fieldWidth = $field.offsetWidth;
 let scoreTable = [];
 let time, coords, gameStatus, timer, score;
-let user;
-
-try {
-    user = { name: parseCookies(document.cookie).user.username, hiScore: 0 };
-} catch (e) {
-    window.location.href= '/login';
-}
+let user = { name: '-', hiScore: 0 };
 
 $cancel.addEventListener("click", init);
 $field.addEventListener("click", hit);
@@ -41,7 +36,7 @@ function newGame() {
     init();
     $field.classList.remove("paused");
     timer = gameFlow();
-    gameStatus = {started: true, paused: false};
+    gameStatus = { started: true, paused: false };
     $pause.classList.remove("disabled");
 }
 
@@ -66,7 +61,7 @@ function setTime(time) {
 function editTime(event) {
     const input = event.target.textContent;
     if (input.match(/^[0-6][0-9]:[0-6][0-9]$/)) {
-        const [ minutes, seconds ] = input.split(':');
+        const [minutes, seconds] = input.split(':');
         time = (minutes * 60 * 1000) + (seconds * 1000);
     } else {
         time = 60 * 1000;
@@ -95,23 +90,21 @@ function addScore(amount) {
 function gameOver() {
     clearInterval(timer);
     $field.classList.add("paused");
-    $total.innerHTML = `Congratulations <span class="primary">${user.name}</span><br/>
-                        Your score: <span class="secondary">${score}</span><br/>
-                        Your hi-score: <span class="secondary">${user.hiScore}</span><br/>`;
+    $total.innerHTML = `Поздравляем <span class="primary">${user.name}</span><br/>
+                        Вы набрали: <span class="secondary">${score}</span><br/>
+                        Ваш лучший результат: <span class="secondary">${user.hiScore}</span><br/>`;
     $dialog.style.display = "flex";
-    $form.elements["user-name"].focus();
 }
 
-function saveResult(event) {
+async function saveResult(event) {
     event.preventDefault();
     const { name, hiScore } = user;
     user.hiScore = hiScore > score ? hiScore : score;
-    scoreTable.push({name, score});
-    scoreTable = sortResults(scoreTable);
-
-    uploadResult({name, score});
-
+    const response = await uploadResult({ name, score });
+    const { topResults } = await response.json();
+    scoreTable = topResults;
     $dialog.style.display = "none";
+    console.log($dialog.style);
     init();
 }
 
@@ -119,14 +112,14 @@ async function loadResults() {
     const response = await fetch('/results', {
         method: 'GET'
     })
-    const { results, userResult } = await response.json();
-    scoreTable = results;
-    user.hiScore = userResult;
+    const { topResults, userResult } = await response.json();
+    scoreTable = topResults;
+    user = userResult;
     drawTable();
 }
 
-async function uploadResult(result) {
-    await fetch('/results', {
+function uploadResult(result) {
+    return fetch('/results', {
         method: 'POST',
         body: JSON.stringify(result),
         headers: {
@@ -136,15 +129,15 @@ async function uploadResult(result) {
 }
 
 function drawTable() {
-    $results.innerHTML = `<h2>LEADERBOARDS</h2>`;
+    $results.innerHTML = `<h2>Таблица лидеров</h2>`;
     scoreTable.forEach(({ name, score }) => {
         const $record = document.createElement('div');
         $record.innerHTML = `<span class=${name === user.name ? 'primary': ''}>${name}</span>
                              <span class="score">${score}</span>`;
         $results.appendChild($record);
-        $username.innerHTML = `Player: <h3 class="primary">${user.name}</h3>`;
-        $hiScore.innerHTML = `Hi-score: <h3 class="secondary">${user.hiScore}</h3>`
     })
+    $username.innerHTML = `Игрок: <h3 class="primary">${user.name}</h3>`;
+    $hiScore.innerHTML = `Hi-score: <h3 class="secondary">${user.hiScore}</h3>`
 }
 
 function createBlocks(amount) {
@@ -167,13 +160,13 @@ function createBlocks(amount) {
 function pauseGame() {
     if (gameStatus.paused) {
         gameStatus.paused = false;
-        $pause.innerText = 'PAUSE';
+        $pause.innerText = 'Пауза';
         timer = gameFlow();
         $field.classList.remove("paused");
         $timer.contentEditable = false;
     } else {
         gameStatus.paused = true;
-        $pause.innerText = 'RESUME';
+        $pause.innerText = 'Дальше';
         clearInterval(timer);
         $field.classList.add("paused");
         $timer.contentEditable = true;

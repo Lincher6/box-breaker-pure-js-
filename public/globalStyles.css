@@ -36,7 +36,7 @@ h3 {
     padding: 0 5px;
 }
 
-.form {
+form {
     max-width: 350px;
     display: flex;
     flex-direction: column;
@@ -50,6 +50,7 @@ input {
     padding: 3px 7px;
     font-size: 1.2rem;
     margin-top: 10px;
+    margin-bottom: 15px;
     background-color: transparent;
     text-decoration: none;
     outline: none;
@@ -69,9 +70,12 @@ input:focus {
     transition: border-bottom .3s;
 }
 
-.error-text {
+#error {
+    max-width: 100%;
+    text-align: center;
+    min-height: 1rem;
     color: red;
-    opacity: 0;
+    white-space: pre-line;
 }
 
 .error-text.visible {
@@ -106,7 +110,7 @@ input:focus {
     outline: none;
     border: none;
     background-color: transparent;
-    font-family: 'DigitalClock', sans-serif;
+    font-family: 'Kelly Slab', sans-serif;
     font-size: 1.7rem;
     font-weight: 600;
     min-width: 130px;
@@ -163,10 +167,5 @@ input:focus {
 
 .secondary {
     color: var(--secondary);
-}
-
-@font-face {
-    font-family: 'DigitalClock';
-    src: local('DigitalClock'), url('./assets/digital-7.ttf');
 }
 

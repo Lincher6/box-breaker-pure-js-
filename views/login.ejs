@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head')%>
+    <link href="/globalStyles.css" rel="stylesheet">
+    <link href="/login/styles.css" rel="stylesheet">
+    <title>Login</title>
+</head>
+<body>
+<div id="app">
+    <div id="page-auth">
+        <div id="title">
+            <a href="https://github.com/Lincher6/box-breaker-pure-js-" target="_blank" rel="noreferrer">
+                <img src="/assets/logo.png" alt=""/>
+            </a>
+        </div>
+        <form id="login-form">
+            <input type="text" name="login" placeholder="Логин" autofocus required/>
+            <input type="password" name="password" placeholder="Пароль" required/>
+            <div id="error"></div>
+
+            <button id="submit" type="submit" class="button outlined-secondary">Войти</button>
+
+            <p>Новый пользователь?<a href="/registration" class="link">Зарегистрироваться</a></p>
+        </form>
+    </div>
+    <script src="/login/script.js" defer type="module"></script>
+</div>
+</body>
+</html>

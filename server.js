@@ -1,24 +1,40 @@
-require('dotenv').config();
+const config = require('./config');
 const express = require('express');
 const serveStatic = require('serve-static');
-const path = require('path');
+const { mongooseErrorHandler } = require('./lib/middlewares');
 const cookieParser = require('cookie-parser')
+const mongoose = require('mongoose');
 
 const app = express();
-const port = process.env.PORT || 9090;
+const port = process.env.PORT || config.PORT;
 
-app.use('/api/tasks', require('./routes/tasks'));
+async function start() {
+    await mongoose.connect(config.DB_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+        useCreateIndex: true
+    });
 
-app.use(serveStatic('static'));
-app.use(cookieParser());
-app.use(express.json());
-app.use('/', require('./routes/game'));
-app.use('/', require('./routes/auth'));
+    app.use('/api/tasks', require('./routes/tasks'));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/static/404/404.html'));
-})
+    app.set('view engine', 'ejs');
+    app.set('trust proxy', true);
+    app.use(serveStatic('public'));
+    app.use(cookieParser());
+    app.use(express.json());
+    app.use('/', require('./routes/game'),require('./routes/auth'));
 
-app.listen(port, () => {
-    console.log(`Server started at http://localhost:${port}`);
-})
+    app.get('*', (req, res) => {
+        res.render('404');
+    })
+
+    app.use(mongooseErrorHandler);
+
+    app.listen(port, () => {
+        console.log(`Server started at http://localhost:${port}`);
+    })
+}
+
+start();
+

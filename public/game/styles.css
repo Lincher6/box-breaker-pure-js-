@@ -27,7 +27,7 @@
 
 #results h2 {
     color: firebrick;
-    font-family: 'DigitalClock', sans-serif;
+    font-family: 'Kelly Slab', sans-serif;
     margin-bottom: 20px;
 }
 
@@ -68,7 +68,7 @@
 
 .display {
     margin: 5px;
-    font-family: 'DigitalClock', sans-serif;
+    font-family: 'Kelly Slab', sans-serif;
     font-size: 2rem;
     min-width: 130px;
     padding: 8px 12px;
@@ -225,7 +225,7 @@
         padding: 5px;
         font-weight: 700;
         font-size: 1.3rem;
-        font-family: 'DigitalClock', sans-serif;
+        font-family: 'Kelly Slab', sans-serif;
         z-index: 3;
     }
 }

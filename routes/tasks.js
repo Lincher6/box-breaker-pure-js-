@@ -1,9 +1,9 @@
 const {Router} = require('express');
-const roman = require('../tasks/roman');
-const palindrome = require('../tasks/palindrome');
-const brackets = require('../tasks/brackets');
-const arraySort = require('../tasks/arraySort');
-const nextIndex = require('../tasks/nextIndex');
+const roman = require('../lib/tasks/roman');
+const palindrome = require('../lib/tasks/palindrome');
+const brackets = require('../lib/tasks/brackets');
+const arraySort = require('../lib/tasks/arraySort');
+const nextIndex = require('../lib/tasks/nextIndex');
 const { callWithResponse } = require('../lib/utils');
 const { jsonParser } = require('../lib/middlewares');
 const router = Router();
