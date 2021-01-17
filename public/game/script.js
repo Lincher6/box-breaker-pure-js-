@@ -104,7 +104,6 @@ async function saveResult(event) {
     const { topResults } = await response.json();
     scoreTable = topResults;
     $dialog.style.display = "none";
-    console.log($dialog.style);
     init();
 }
 

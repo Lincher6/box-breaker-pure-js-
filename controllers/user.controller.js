@@ -20,7 +20,7 @@ exports.login = async function ({ body }, res, next) {
 
 exports.createUser = async function({ body, ip }, res, next) {
     try {
-        const user = await UserService.createUser({ ...body, ip });
+        const user = await UserService.createUser({ ...body, userIp: ip });
         res.cookie('user', { id: user._id, name: user.name }, { maxAge: DATE_DAY });
         return res.redirect('/game');
     } catch (error) {
