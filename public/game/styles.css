@@ -163,6 +163,17 @@
     background-color: #182533;;
 }
 
+.userActions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.userActions button {
+    font-size: 1.2rem;
+    padding: 5px 10px;
+    min-width: 0;
+}
+
 #dialog input.error ~ .error-text{
     opacity: 1;
 }
@@ -177,13 +188,6 @@
 
 #username {
     text-shadow: -2px 2px 1px black;
-}
-
-#logout {
-    font-size: 1.2rem;
-    padding: 5px 10px;
-    margin-left: auto;
-    min-width: 0;
 }
 
 @media (max-width: 1000px) {

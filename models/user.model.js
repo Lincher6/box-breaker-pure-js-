@@ -5,8 +5,7 @@ const bcrypt = require('bcrypt');
 const UserSchema = new mongoose.Schema({
     login: {
         type: String,
-        index: { unique: true},
-
+        index: { unique: true },
         required: [true, 'логин - обязательное поле.'],
         trim: true,
         match: [
@@ -46,6 +45,18 @@ const UserSchema = new mongoose.Schema({
     userIp: {
         type: String,
         default: DEFAULT_IP
+    },
+    role: {
+        type: String,
+        default: 'player'
+    },
+    hiScore: {
+        type: Number,
+        default: 0
+    },
+    gamesPlayed: {
+        type: Number,
+        default: 0
     }
 })
 

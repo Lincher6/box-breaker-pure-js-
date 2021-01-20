@@ -1,7 +1,6 @@
-import { getElements } from "../utils.js";
-if (document.cookie.split('=')[0] === 'user') window.location.href = '/game';
+import { getElements } from '../utils.js';
 
-const selectors = ["error", "login-form"];
+const selectors = ['error', 'login-form'];
 const [ $error, $loginForm ] = getElements(selectors);
 
 $loginForm.addEventListener('submit', login);

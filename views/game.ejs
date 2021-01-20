@@ -33,13 +33,19 @@
                 </a>
             </div>
             <div id="results"></div>
-            <div id="user-card">
-                <div id="username">Игрок: <h3 class="primary">-</h3></div>
+            <div id="user-card" data-user=<%= JSON.stringify(user) %>>
+                <div id="username" >Игрок: <h3 class="primary">-</h3></div>
                 <div id="hi-score">Hi-score: <h3 class="secondary">0</h3></div>
             </div>
-            <form action="/logout" method="post">
-                <button id="logout" class="button contained-secondary">Выйти</button>
-            </form>
+            <div class="userActions">
+                <button type="button" class="button contained-primary <%= user?.role !== 'admin' ? 'disabled' : ''%>">
+                    <a href="/admin">Админка</a>
+                </button>
+                <form action="/logout" method="post">
+                    <button id="logout" class="button contained-secondary">Выйти</button>
+                </form>
+            </div>
+
 
         </div>
     </div>

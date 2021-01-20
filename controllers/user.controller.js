@@ -1,13 +1,13 @@
 const UserService = require('../services/user.service');
-const { DATE_DAY } = require("../lib/constants");
 const bcrypt = require('bcrypt');
 
-exports.login = async function ({ body }, res, next) {
+exports.login = async function (req, res, next) {
     try {
-        const user = await UserService.getUser(body.login.trim());
+        const { body } = req;
+        const user = await UserService.getUser({ login: body.login.trim() });
         if (user) {
             if (bcrypt.compareSync(body.password, user.password)) {
-                res.cookie('user', { id: user._id, name: user.name }, { maxAge: DATE_DAY });
+                req.session.user = user;
                 return res.redirect('/game');
             }
             return res.status(400).json({ message: 'Неверный пароль.' });
@@ -18,14 +18,32 @@ exports.login = async function ({ body }, res, next) {
     }
 }
 
-exports.createUser = async function({ body, ip }, res, next) {
+exports.getUsers = async function (req, res, next) {
     try {
+        const users = await UserService.getUsers(req.query);
+        const totalUserCount = await UserService.getTotalUserCount(req.query.searchString);
+        return res.status(200).json({ users, totalUserCount })
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.createUser = async function(req, res, next) {
+    try {
+        const { body, ip } = req;
         const user = await UserService.createUser({ ...body, userIp: ip });
-        res.cookie('user', { id: user._id, name: user.name }, { maxAge: DATE_DAY });
+        req.session.user = user;
         return res.redirect('/game');
     } catch (error) {
         next(error);
     }
+}
 
-
+exports.updateUser = async function({ body }, res, next) {
+    try {
+        await UserService.updateUser({ login: body.login }, { [body.key]: body.value });
+        return res.status(200).json({ message: 'role changed' });
+    } catch (error) {
+        next(error);
+    }
 }
