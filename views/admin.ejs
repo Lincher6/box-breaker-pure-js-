@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head')%>
+    <link href="/globalStyles.css" rel="stylesheet">
+    <link href="/admin/styles.css" rel="stylesheet">
+    <title>Admin</title>
+</head>
+<body>
+<div id="app">
+    <div class="admin">
+        <a id="close" href="/game">&#x2715</a>
+        <h2>Админ Панель</h2>
+        <form id="search-form" data-user=<%= JSON.stringify(user) %>>
+            <input type="text" name="search" placeholder="search"/>
+            <button>&#128269;</button>
+        </form>
+        <table id="users-table"></table>
+        <div class="pagination">
+            <button id="first" data-arrow="first" class="button contained-secondary disabled">&#171;</button>
+            <button id="previous" data-arrow="previous" class="button contained-secondary disabled">&#8249;</button>
+            <button id="next" data-arrow="next" class="button contained-secondary disabled">&#8250;</button>
+            <button id="last" data-arrow="last" class="button contained-secondary disabled">&#187;</button>
+        </div>
+    </div>
+
+
+    <script src="/admin/script.js" defer type="module"></script>
+</div>
+</body>
+</html>

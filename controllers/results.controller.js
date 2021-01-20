@@ -1,15 +1,12 @@
 const ResultServices = require('../services/result.service');
+const UserServices = require('../services/user.service');
 
 exports.getResults = async function (req, res, next) {
     try {
-        const { name } = req.cookies.user;
         const topResults = await ResultServices.getResults();
-        const userResults = await ResultServices.getUserResults(name);
-        const userTopResult = userResults.reduce((max, result) => {
-            max = max > result.score ? max : result.score;
-            return max;
-        }, 0)
-        res.status(200).json({ topResults, userResult: { name, hiScore: userTopResult } });
+        const { name } = req.session.user;
+        const { hiScore } = await UserServices.getUser({ name });
+        res.status(200).json({ topResults, hiScore });
     } catch (error) {
         next(error);
     }
@@ -17,9 +14,18 @@ exports.getResults = async function (req, res, next) {
 
 exports.saveResult = async function (req, res, next) {
     try {
-        await ResultServices.saveResult(req.body);
+        const { name, score } = req.body;
+        await ResultServices.saveResult({ name, score });
+
+        const userResults = await ResultServices.getUserResults(name);
+        const hiScore = userResults.reduce((max, result) => {
+            max = max > result.score ? max : result.score;
+            return max;
+        }, score)
+
+        await UserServices.updateUser({ name }, { hiScore, $inc: { gamesPlayed: 1} });
         const topResults = await ResultServices.getResults();
-        return res.status(200).json({ topResults });
+        return res.status(200).json({ topResults, hiScore });
     } catch (error) {
         next(error);
     }
